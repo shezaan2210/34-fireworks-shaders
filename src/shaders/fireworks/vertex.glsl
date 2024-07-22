@@ -13,28 +13,16 @@ void main () {
     float progress = uProgress * aTime;
 
     // exploding
-    float explodingProgress = remap(progress, 0.0, 0.1, 0.0, 1.0);
-    explodingProgress = clamp(explodingProgress, 0.0, 1.0);
-    explodingProgress = 1.0 - pow(1.0 - explodingProgress, 3.0);
-    newPosition *= explodingProgress;
+   #include ../includes/exploding.glsl
 
      // falling
-     float fallingProgress = remap(progress, 0.1, 1.0, 0.0, 1.0);
-     fallingProgress = clamp(fallingProgress, 0.0, 1.0);
-     fallingProgress = 1.0 - pow(1.0 - fallingProgress, 3.0);
-     newPosition.y -= fallingProgress * .2;
+    #include ../includes/falling.glsl
 
      // scaling
-     float sizeOpening = remap(progress, 0.0, 0.125, 0.0, 1.0);
-     float sizeClosing = remap(progress, 0.125, 1.0, 1.0, 0.0);
-     float sizeProgress = min(sizeOpening, sizeClosing);
-     sizeProgress = clamp(sizeProgress, 0.0, 1.0);
+     #include ../includes/scaling.glsl
 
      // twinkling
-     float twinkling = remap(progress, 0.2, 0.8, 0.0, 1.0);
-     twinkling = clamp(twinkling, 0.0, 1.0);
-     float sizeTwinkling = sin(progress * 30.0) * .5 + .5;
-     sizeTwinkling = 1.0 - sizeTwinkling * twinkling;
+    #include ../includes/twinkling.glsl
 
     vec4 modelPosition = modelMatrix * vec4(newPosition , 1.0);
     vec4 viewPosition = viewMatrix * modelPosition;
